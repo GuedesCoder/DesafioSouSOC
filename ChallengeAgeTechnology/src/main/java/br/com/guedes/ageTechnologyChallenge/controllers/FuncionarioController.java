@@ -1,4 +1,3 @@
-
 package br.com.guedes.ageTechnologyChallenge.controllers;
 
 import java.util.List;
@@ -7,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import br.com.guedes.ageTechnologyChallenge.entities.Funcionario;
 import br.com.guedes.ageTechnologyChallenge.services.FuncionarioService;
+import jakarta.validation.Valid;
 
 @Controller
 public class FuncionarioController {
 
     @Autowired
     private FuncionarioService funcionarioService;
-
+    
     @GetMapping("/listar-funcionarios")
     public String listar(Model model) {
         List<Funcionario> funcionarios = funcionarioService.listarTodos();
@@ -43,6 +44,16 @@ public class FuncionarioController {
         model.addAttribute("funcionario", funcionario);
         return "atualizar-funcionario";
     }
+    
+    @PostMapping("/atualizar-funcionario")
+    public String salvarFuncionarioAtualizado(@Valid Funcionario funcionario, BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/atualizar-funcionario";
+        }
+
+        funcionarioService.salvar(funcionario);
+        return "redirect:/listar-funcionarios";
+    }
 
     @PostMapping("/salvar-funcionario")
     public String salvar(@ModelAttribute("funcionario") Funcionario funcionario) {
@@ -62,4 +73,3 @@ public class FuncionarioController {
         binder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 }
-

@@ -9,24 +9,24 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
-	<title>Atualização de Funcionarios</title>
+	<title>Atualização de Exames</title>
 </head>
 
-<body style="background-color: #f0d99c">
+<body style="background-color: #afddfa">
 	<div class="container mt-5">
-		<div class="card-header" style="background-color: #f2c85a">
-			<h1>Editar Funcionário</h1>
-			<p>Aqui você edita dados de um funcionário</p>
+		<div class="card-header" style="background-color: #50b4f2">
+			<h1>Editar Exames</h1>
+			<p>Aqui você edita dados de um exame</p>
 		</div>
-		<form th:action="@{/atualizar-funcionario}" th:method="put" th:object="${funcionario}">
-			<input type="hidden" id="id" name="id" th:value="${funcionario.id}">
+		<form th:action="@{/atualizar-exame}" th:method="put" th:object="${exame}">
+			<input type="hidden" id="id" name="id" th:value="${exame.id}">
 			<div class="form-group">
-				<label for="nome">Nome:</label>
+				<label for="nome">Nome</label>
 				<input type="text" class="form-control" id="nome" th:field="*{nome}"
-					placeholder="Digite o nome completo do funcionário" required>
+					placeholder="Digite o nome do exame" required>
 			</div>
 			<button type="submit" class="btn btn-primary mt-3">Salvar</button>
-			<a class="btn btn-secondary mt-3" th:href="@{/listar-funcionarios}">Cancelar</a>
+			<a class="btn btn-secondary mt-3" th:href="@{/listar-exames}">Cancelar</a>
 		</form>
 	</div>
 </body>
