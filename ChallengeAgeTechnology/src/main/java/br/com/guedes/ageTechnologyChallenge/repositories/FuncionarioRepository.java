@@ -1,10 +1,13 @@
 package br.com.guedes.ageTechnologyChallenge.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
-import br.com.guedes.ageTechnologyChallenge.Entities.Funcionarios;
+import br.com.guedes.ageTechnologyChallenge.entities.Funcionario;
 
-public interface FuncionarioRepository extends JpaRepository<Funcionarios, Long>, PagingAndSortingRepository<Funcionarios, Long>{
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
+
+	List<Funcionario> findByNomeContainingIgnoreCase(String nome);
 
 }
