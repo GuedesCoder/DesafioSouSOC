@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Deletar Exame Realizado</h1>
+
+  <form method="POST" action="{% url 'deletar-exameRealizado' exameRealizado.id %}" class="form-group">
+    {% csrf_token %}
+    <div class="form-group">
+      <label>Funcionário:</label>
+      <input type="text" class="form-control" value="{{ exameRealizado.funcionario.id }} - {{ exameRealizado.funcionario.nome }}" readonly>
+    </div>
+    <div class="form-group">
+      <label>Exame:</label>
+      <input type="text" class="form-control" value="{{ exameRealizado.exame.nome }}" readonly>
+    </div>
+    <div class="form-group">
+      <label>Data de Realização:</label>
+      <input type="text" class="form-control" value="{{ exameRealizado.data_realizacao }}" readonly>
+    </div>
+    <input type="submit" value="Confirmar exclusão" class="btn btn-danger">
+    <a href="{% url 'listar-examesRealizados' exameRealizado.funcionario.id %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+{% endblock %}
