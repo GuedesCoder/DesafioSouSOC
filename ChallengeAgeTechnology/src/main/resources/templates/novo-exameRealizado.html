@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <head>
 	<meta charset="utf-8">
@@ -16,37 +16,31 @@
 	<div class="container mt-5">
 		<div class="card-header" style="background-color: #50b4f2">
 			<h1>Novo Exame Realizado</h1>
-			<p>Adicione um novo exame realizado</p>
+			<p>Aqui é possível cadastrar um novo exame realizado</p>
 		</div>
-		<form method="post" th:action="@{/salvar-exameRealizado}">
-			<div class="row">
-				<div class="form-group col-2">
-					<label for="idFuncionario">ID Funcionário:</label>
-					<input type="number" class="form-control" id="idFuncionario" name="funcionario.id" required>
-				</div>
-				<div class="form-group col-10">
-					<label for="nomeFuncionario">Nome do Funcionário:</label>
-					<input type="text" class="form-control" id="nomeFuncionario" name="funcionario.nome"
-						th:value="${examesRealizados.funcionario.nome}" readonly>
-				</div>
+		<form method="POST" th:object="${exameRealizado}" th:action="@{/salvar-exameRealizado}">
+			<div class="form-group">
+				<label for="funcionario">Funcionário:</label>
+				<select class="form-control" id="funcionario" name="funcionario">
+					<option value="">Selecione um funcionário</option>
+					<c:forEach var="funcionario" items="${funcionarios}">
+						<option value="${funcionario.id}">${funcionario.nome}</option>
+					</c:forEach>
+				</select>
 			</div>
-			<div class="row">
-				<div class="form-group col-2">
-					<label for="idExame">ID Exame:</label>
-					<input type="number" class="form-control" id="idExame" name="exame.id" required>
-				</div>
-				<div class="form-group col-10">
-					<label for="nomeExame">Nome do Exame:</label>
-					<input type="text" class="form-control" id="nomeExame" name="exame.nome"
-						th:value="${examesRealizados.exame.nome}" readonly>
-				</div>
+			<div class="form-group mt-3">
+				<label for="exame">Exame:</label>
+				<select class="form-control" id="exame" name="exame.id">
+					<option th:each="exame : ${exames}" th:value="${exame.id}" th:text="${exame.nome}"></option>
+				</select>
 			</div>
-			<div class="form-group col-4">
+			<div class="form-group mt-3 col-4">
 				<label for="dataDeRealizacao">Data de Realização:</label>
-				<input type="date" class="form-control" id="dataDeRealizacao" name="dataDeRealizacao" required>
+				<input type="date" class="form-control" id="dataDeRealizacao" name="dataDeRealizacao"
+					placeholder="Data de Realização" required>
 			</div>
 			<button type="submit" class="btn btn-primary mt-3">Salvar</button>
-			<a class="btn btn-secondary mt-3" th:href="@{/}">Cancelar</a>
+			<a class="btn btn-secondary mt-3" th:href="@{/listar-examesRealizados}">Cancelar</a>
 		</form>
 	</div>
 </body>

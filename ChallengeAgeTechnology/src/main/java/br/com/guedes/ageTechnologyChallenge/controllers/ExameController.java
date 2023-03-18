@@ -26,21 +26,28 @@ public class ExameController {
 	private ExameService exameService;
 
 	@GetMapping("/listar-exames")
-	public String listar(Model model) {
+	public String listarExames(Model model) {
 		List<Exame> exames = exameService.listarTodos();
 		model.addAttribute("exames", exames);
 		return "listar-exames";
 	}
 
+	@GetMapping("/ver-exame/{id}")
+	public String verExame(@PathVariable("id") Long id, Model model) {
+		Exame exame = exameService.buscarPorId(id);
+		model.addAttribute("exame", exame);
+		return "ver-exame";
+	}
+	
 	@GetMapping("/novo-exame")
-	public String novo(Model model) {
+	public String novoExame(Model model) {
 		Exame exame = new Exame();
 		model.addAttribute("exame", exame);
 		return "novo-exame";
 	}
 
 	@GetMapping("/atualizar-exame/{id}")
-	public String editar(@PathVariable("id") Long id, Model model) {
+	public String editarExame(@PathVariable("id") Long id, Model model) {
 		Exame exame = exameService.buscarPorId(id);
 		model.addAttribute("exame", exame);
 		return "atualizar-exame";
@@ -57,15 +64,15 @@ public class ExameController {
     }
 
 	@PostMapping("/salvar-exame")
-	public String salvar(@ModelAttribute("exame") Exame exame) {
+	public String salvarExame(@ModelAttribute("exame") Exame exame) {
 		exameService.salvar(exame);
 		return "redirect:/listar-exames";
 	}
-
+	
 	@GetMapping("/deletar-exame/{id}")
-	public String excluir(@PathVariable("id") Long id) {
-		exameService.excluir(id);
-		return "redirect:/listar-exames";
+	public String deletarExame(@PathVariable("id") Long id) {
+	    exameService.deletar(id);
+	    return "redirect:/listar-exames";
 	}
 
 	@InitBinder

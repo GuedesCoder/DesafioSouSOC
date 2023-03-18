@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.guedes.ageTechnologyChallenge.entities.Funcionario;
 import br.com.guedes.ageTechnologyChallenge.repositories.FuncionarioRepository;
 
 @Service
+@Transactional
 public class FuncionarioService {
 
     @Autowired

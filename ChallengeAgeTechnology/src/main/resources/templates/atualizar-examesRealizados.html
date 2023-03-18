@@ -16,38 +16,31 @@
 	<div class="container mt-5">
 		<div class="card-header" style="background-color: #50b4f2">
 			<h1>Atualizar Exame Realizado</h1>
-			<p>Edite as informações do exame realizado</p>
+			<p>Atualize os dados do exame realizado abaixo</p>
 		</div>
-		<form th:action="@{/atualizar-exameRealizado}" method="post">
-			<input type="hidden" th:field="*{id}">
-			<div class="row">
-				<div class="form-group col-2">
-					<label for="funcionarioId">ID do Funcionário:</label>
-					<input type="text" class="form-control" id="funcionarioId" th:field="*{funcionario.id}" readonly>
-				</div>
-				<div class="form-group col-10">
-					<label for="funcionarioNome">Nome do Funcionário:</label>
-					<input type="text" class="form-control" id="funcionarioNome"
-						th:value="${exameRealizado.funcionario.nome}" readonly>
-				</div>
+		<form method="post" th:action="@{/atualizar-exameRealizado}" th:object="${exameRealizado}">
+			<input type="hidden" th:field="*{id}" />
+			<div class="form-group mt-3">
+				<label for="funcionario">Funcionário:</label>
+				<select class="form-control" id="funcionario" name="funcionario.id" readonly>
+					<option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}"
+						th:text="${funcionario.nome}"></option>
+				</select>
+
 			</div>
-			<div class="row">
-				<div class="form-group col-2">
-					<label for="exameId">ID do Exame:</label>
-					<input type="text" class="form-control" id="exameId" th:field="*{exame.id}" readonly>
-				</div>
-				<div class="form-group col-10">
-					<label for="exameNome">Nome do Exame:</label>
-					<input type="text" class="form-control" id="exameNome" th:value="${exameRealizado.exame.nome}"
-						readonly>
-				</div>
+			<div class="form-group mt-3">
+				<label for="exame">Exame:</label>
+				<input type="text" class="form-control" id="exame" name="exame.nome" readonly="readonly"
+					th:value="${exameRealizado.exame.nome}" />
+				<input type="hidden" name="exame.id" th:value="${exameRealizado.exame.id}" />
 			</div>
-			<div class="form-group col-4">
+			<div class="form-group mt-3 col-4">
 				<label for="dataDeRealizacao">Data de Realização:</label>
-				<input type="date" class="form-control" id="dataDeRealizacao" th:field="*{dataDeRealizacao}">
+				<input type="date" class="form-control" id="dataDeRealizacao" name="dataDeRealizacao"
+					th:value="${#dates.format(exameRealizado.dataDeRealizacao, 'yyyy-MM-dd')}" required />
 			</div>
+			<a class="btn btn-secondary mt-3" th:href="@{/listar-examesRealizados}">Voltar</a>
 			<button type="submit" class="btn btn-primary mt-3">Atualizar</button>
-			<a class="btn btn-secondary mt-3" th:href="@{/}">Cancelar</a>
 		</form>
 	</div>
 </body>
